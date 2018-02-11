@@ -37,6 +37,7 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.MonitoredFoldersButton = this.Factory.CreateRibbonButton();
+            this.TestNotificationButton = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -51,6 +52,7 @@
             // group1
             // 
             this.group1.Items.Add(this.MonitoredFoldersButton);
+            this.group1.Items.Add(this.TestNotificationButton);
             this.group1.Label = "Folder Notifier";
             this.group1.Name = "group1";
             // 
@@ -61,6 +63,12 @@
             this.MonitoredFoldersButton.SuperTip = "Configure the monitored folders that a popup message will be shown when a new mai" +
     "l has been added.";
             this.MonitoredFoldersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.MonitoredFoldersButton_Click);
+            // 
+            // TestNotificationButton
+            // 
+            this.TestNotificationButton.Label = "Test Notification";
+            this.TestNotificationButton.Name = "TestNotificationButton";
+            this.TestNotificationButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.TestNotificationButton_Click);
             // 
             // PrimaryRibbonTab
             // 
@@ -81,6 +89,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton MonitoredFoldersButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton TestNotificationButton;
     }
 
     partial class ThisRibbonCollection

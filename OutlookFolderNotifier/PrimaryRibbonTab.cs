@@ -22,8 +22,18 @@ namespace OutlookFolderNotifier
             {
                 var result = dialog.ShowDialog(Settings.Default.MonitoredFolders ?? new string[] { },
                     Globals.ThisAddIn.Application.Session.Folders.OfType<Outlook.Folder>());
-                if (result != null) Settings.Default.MonitoredFolders = result.ToArray();
+                if (result != null)
+                {
+                    Settings.Default.MonitoredFolders = result.ToArray();
+                    Settings.Default.Save();
+                    Globals.ThisAddIn.RefreshFolderMonitors();
+                }
             }
+        }
+
+        private void TestNotificationButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            FolderMonitor.ShowNewMailNotification("FolderName", "Sender <sender@company.org>", "Mail Subject", "Mail body.");
         }
     }
 }

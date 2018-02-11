@@ -109,6 +109,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Transitions, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dot-net-transitions.1.2.1.0\lib\net40-full\Transitions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -159,11 +162,18 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="FolderMonitor.cs" />
     <Compile Include="MonitoredFoldersDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MonitoredFoldersDialog.Designer.cs">
       <DependentUpon>MonitoredFoldersDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewMailPopupWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewMailPopupWindow.Designer.cs">
+      <DependentUpon>NewMailPopupWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="PrimaryRibbonTab.cs">
       <SubType>Component</SubType>
@@ -176,6 +186,9 @@
     </Compile>
     <EmbeddedResource Include="MonitoredFoldersDialog.resx">
       <DependentUpon>MonitoredFoldersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewMailPopupWindow.resx">
+      <DependentUpon>NewMailPopupWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrimaryRibbonTab.resx">
       <DependentUpon>PrimaryRibbonTab.cs</DependentUpon>
@@ -191,6 +204,7 @@
     </Compile>
     <None Include="app.config" />
     <None Include="OutlookFolderNotifier_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
