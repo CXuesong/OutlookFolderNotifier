@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Microsoft.Office.Tools.Ribbon;
 using OutlookFolderNotifier.Properties;
 using Outlook = Microsoft.Office.Interop.Outlook;
@@ -9,7 +10,7 @@ using Office = Microsoft.Office.Core;
 
 namespace OutlookFolderNotifier
 {
-    public partial class PrimaryRibbonTab
+    public partial class PrimaryRibbon
     {
         private void PrimaryRibbonTab_Load(object sender, RibbonUIEventArgs e)
         {
@@ -34,6 +35,12 @@ namespace OutlookFolderNotifier
         private void TestNotificationButton_Click(object sender, RibbonControlEventArgs e)
         {
             FolderMonitor.ShowNewMailNotification("FolderName", "Sender <sender@company.org>", "Mail Subject", "Mail body.");
+        }
+
+        private void ShowAboutButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            using (var dialog = new AboutAddInDialog())
+                dialog.ShowDialog();
         }
     }
 }

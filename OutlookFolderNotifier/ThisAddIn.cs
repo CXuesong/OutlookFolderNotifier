@@ -41,10 +41,10 @@ namespace OutlookFolderNotifier
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
-            AppDomain.CurrentDomain.FirstChanceException += (o, e1) =>
-            {
-                MessageBox.Show(e1.Exception.ToString());
-            };
+            //AppDomain.CurrentDomain.FirstChanceException += (o, e1) =>
+            //{
+            //    MessageBox.Show(e1.Exception.ToString());
+            //};
             RefreshFolderMonitors();
         }
 

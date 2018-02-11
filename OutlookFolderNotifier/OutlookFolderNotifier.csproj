@@ -162,6 +162,12 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="AboutAddInDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutAddInDialog.Designer.cs">
+      <DependentUpon>AboutAddInDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FolderMonitor.cs" />
     <Compile Include="MonitoredFoldersDialog.cs">
       <SubType>Form</SubType>
@@ -175,23 +181,26 @@
     <Compile Include="NewMailPopupWindow.Designer.cs">
       <DependentUpon>NewMailPopupWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrimaryRibbonTab.cs">
+    <Compile Include="PrimaryRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PrimaryRibbonTab.Designer.cs">
-      <DependentUpon>PrimaryRibbonTab.cs</DependentUpon>
+    <Compile Include="PrimaryRibbon.Designer.cs">
+      <DependentUpon>PrimaryRibbon.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="AboutAddInDialog.resx">
+      <DependentUpon>AboutAddInDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MonitoredFoldersDialog.resx">
       <DependentUpon>MonitoredFoldersDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewMailPopupWindow.resx">
       <DependentUpon>NewMailPopupWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PrimaryRibbonTab.resx">
-      <DependentUpon>PrimaryRibbonTab.cs</DependentUpon>
+    <EmbeddedResource Include="PrimaryRibbon.resx">
+      <DependentUpon>PrimaryRibbon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
