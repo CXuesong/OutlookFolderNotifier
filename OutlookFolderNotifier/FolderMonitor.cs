@@ -69,7 +69,7 @@ namespace OutlookFolderNotifier
             }
 
             ApplyClickHandler(popup);
-            SystemSounds.Question.Play();
+            SystemSounds.Beep.Play();
             popup.ShowPopup();
         }
 

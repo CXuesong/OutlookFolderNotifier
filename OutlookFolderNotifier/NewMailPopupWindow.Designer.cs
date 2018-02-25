@@ -120,9 +120,11 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "NewMailPopupWindow";
-            this.Opacity = 0.9D;
             this.Padding = new System.Windows.Forms.Padding(5);
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewMailPopupWindow_FormClosed);
             this.MouseEnter += new System.EventHandler(this.NewMailPopupWindow_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.NewMailPopupWindow_MouseLeave);
             this.tableLayoutPanel1.ResumeLayout(false);

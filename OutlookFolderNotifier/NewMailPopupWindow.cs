@@ -14,7 +14,11 @@ namespace OutlookFolderNotifier
     public partial class NewMailPopupWindow : Form
     {
 
+        private static readonly List<NewMailPopupWindow> visiblePopups = new List<NewMailPopupWindow>();
         private bool isClosing;
+        private Rectangle targetRect;
+
+        private const double DeactiveOpacity = 0.9;
 
         public NewMailPopupWindow()
         {
@@ -23,11 +27,41 @@ namespace OutlookFolderNotifier
 
         public void ShowPopup()
         {
+            const int popupsMargin = 5;
             var workingArea = Screen.PrimaryScreen.WorkingArea;
-            this.Location = new Point(workingArea.Right, workingArea.Bottom - this.Height);
-            this.Show();
-            var transition = new Transition(new TransitionType_EaseInEaseOut(500));
-            transition.add(this, nameof(this.Left), workingArea.Right - this.Width);
+            var rect = new Rectangle(workingArea.Right - this.Width, workingArea.Bottom - this.Height, this.Width, this.Height);
+            // avoid intersections
+            lock (visiblePopups)
+            {
+                foreach (var f in visiblePopups)
+                {
+                    var frect = f.targetRect;
+                    if (rect.IntersectsWith(frect))
+                    {
+                        // Move upwards.
+                        var nextTop = f.Top - rect.Height - popupsMargin;
+                        if (nextTop < workingArea.Top)
+                        {
+                            var nextLeft = frect.Left - rect.Width - popupsMargin;
+                            nextTop = workingArea.Bottom - this.Height;
+                            if (nextLeft < 0) break;
+                            rect.X = nextLeft;
+                        }
+
+                        rect.Y = nextTop;
+                    }
+                }
+
+                targetRect = rect;
+                visiblePopups.Add(this);
+            }
+
+            this.Location = new Point(workingArea.Right, rect.Top);
+            this.Opacity = 0;
+            this.Visible = true;
+            var transition = new Transition(new TransitionType_EaseInEaseOut(200));
+            transition.add(this, nameof(this.Left), rect.Left);
+            transition.add(this, nameof(this.Opacity), 1.0);
             transition.run();
             transition.TransitionCompletedEvent += (_, e) => { TimeoutTimer.Enabled = true; };
         }
@@ -39,6 +73,7 @@ namespace OutlookFolderNotifier
             isClosing = true;
             var transition = new Transition(new TransitionType_EaseInEaseOut(500));
             transition.add(this, nameof(this.Left), workingArea.Right);
+            transition.add(this, nameof(this.Opacity), 0.0);
             transition.run();
             transition.TransitionCompletedEvent += (_, e) => { this.Close(); };
         }
@@ -52,11 +87,22 @@ namespace OutlookFolderNotifier
         private void NewMailPopupWindow_MouseEnter(object sender, EventArgs e)
         {
             TimeoutTimer.Enabled = false;
+            this.Opacity = 1;
         }
 
         private void NewMailPopupWindow_MouseLeave(object sender, EventArgs e)
         {
-            if (!isClosing) TimeoutTimer.Enabled = true;
+            if (!isClosing)
+            {
+                TimeoutTimer.Enabled = true;
+                this.Opacity = DeactiveOpacity;
+            }
+        }
+
+        private void NewMailPopupWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            lock (visiblePopups)
+                visiblePopups.Remove(this);
         }
     }
 }
