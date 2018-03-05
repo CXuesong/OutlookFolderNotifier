@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -27,12 +29,23 @@ namespace OutlookFolderNotifier
                 {
                     foreach (var f in fs)
                     {
-                        if (monitoredFolders.Contains(f.FolderPath))
+                        try
                         {
-                            monitors.Add(new FolderMonitor(f.FolderPath, f.Items));
+                            Debug.WriteLine(f.FolderPath);
+                            if (monitoredFolders.Contains(f.FolderPath))
+                            {
+                                monitors.Add(new FolderMonitor(f.FolderPath, f.Items));
+                            }
+                            if (f.Folders.Count > 0) VisitFolder(f.Folders.OfType<Outlook.Folder>());
                         }
-                        if (f.Folders.Count > 0) VisitFolder(f.Folders.OfType<Outlook.Folder>());
+                        catch (COMException ex) when (ex.HResult == unchecked((int)0x8834010F))
+                        {
+                            Debug.WriteLine("COMException");
+                            // This situation can happen if you have SharePoint accounts
+                            // AND currently there is no network available.
+                        }
                     }
+
                 }
 
                 VisitFolder(Application.Session.Folders.OfType<Outlook.Folder>());

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,15 +24,23 @@ namespace OutlookFolderNotifier
             var paths = new HashSet<string>(monitoredPaths);
             void PopulateFolders(IEnumerable<Folder> fds, TreeNodeCollection parentCollection)
             {
-                foreach (var f in fds)
+                try
                 {
-                    var node = new TreeNode(f.Name)
+                    foreach (var f in fds)
                     {
-                        Checked = paths.Contains(f.FolderPath),
-                        Tag = f.FolderPath,
-                    };
-                    parentCollection.Add(node);
-                    if (f.Folders.Count > 0) PopulateFolders(f.Folders.OfType<Folder>(), node.Nodes);
+                        var node = new TreeNode(f.Name)
+                        {
+                            Checked = paths.Contains(f.FolderPath),
+                            Tag = f.FolderPath,
+                        };
+                        parentCollection.Add(node);
+                        if (f.Folders.Count > 0) PopulateFolders(f.Folders.OfType<Folder>(), node.Nodes);
+                    }
+                }
+                catch (COMException ex) when (ex.HResult == unchecked((int)0xA304010F))
+                {
+                    // This situation can happen if you have SharePoint accounts
+                    // AND currently there is no network available.
                 }
             }
 
