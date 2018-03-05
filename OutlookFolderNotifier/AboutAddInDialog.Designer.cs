@@ -175,7 +175,6 @@
             // 
             // DonateButton
             // 
-            this.DonateButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.DonateButton.Location = new System.Drawing.Point(398, 259);
             this.DonateButton.Name = "DonateButton";
             this.DonateButton.Size = new System.Drawing.Size(75, 23);
