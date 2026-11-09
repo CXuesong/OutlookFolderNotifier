@@ -58,6 +58,13 @@ namespace OutlookFolderNotifier
             //{
             //    MessageBox.Show(e1.Exception.ToString());
             //};
+            if (!Settings.Default.SettingsUpgraded)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.SettingsUpgraded = true;
+                Settings.Default.Save();
+            }
+
             RefreshFolderMonitors();
         }
 
